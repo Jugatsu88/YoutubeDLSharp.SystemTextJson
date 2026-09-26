@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using YoutubeDLSharp.Converters;
 
@@ -7,30 +7,30 @@ namespace YoutubeDLSharp.Metadata
     //https://github.com/yt-dlp/yt-dlp/blob/9c53b9a1b6b8914e4322263c97c26999f2e5832e/yt_dlp/extractor/common.py#L105-L403
     public class CommentData
     {
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public string ID { get; set; }
-        [JsonProperty("author")]
+        [JsonPropertyName("author")]
         public string Author { get; set; }
-        [JsonProperty("author_id")]
+        [JsonPropertyName("author_id")]
         public string AuthorID { get; set; }
-        [JsonProperty("author_thumbnail")]
+        [JsonPropertyName("author_thumbnail")]
         public string AuthorThumbnail { get; set; }
-        [JsonProperty("html")]
+        [JsonPropertyName("html")]
         public string Html { get; set; }
-        [JsonProperty("text")]
+        [JsonPropertyName("text")]
         public string Text { get; set; }
-        [JsonProperty("timestamp")]
+        [JsonPropertyName("timestamp")]
         [JsonConverter(typeof(UnixTimestampConverter))]
-        public DateTime Timestamp { get; set; } //UNIX Timestamp
-        [JsonProperty("parent")]
+        public DateTime? Timestamp { get; set; } //UNIX Timestamp
+        [JsonPropertyName("parent")]
         public string Parent { get; set; }
-        [JsonProperty("like_count")]
+        [JsonPropertyName("like_count")]
         public int? LikeCount { get; set; }
-        [JsonProperty("dislike_count")]
+        [JsonPropertyName("dislike_count")]
         public int? DislikeCount { get; set; }
-        [JsonProperty("is_favorited")]
+        [JsonPropertyName("is_favorited")]
         public bool? IsFavorited { get; set; }
-        [JsonProperty("author_is_uploader")]
+        [JsonPropertyName("author_is_uploader")]
         public bool? AuthorIsUploader { get; set; }
 
         //Unused Fields (These are fields that were excluded, but documented for future use:

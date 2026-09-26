@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net462;net6.0;net8.0</TargetFrameworks>
+    <!-- Trimmed from upstream's net462;net6.0;net8.0 to match the library project's own
+         netstandard2.0;net8.0 (net462/net6.0 no longer build - see YoutubeDLSharp.csproj). -->
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 

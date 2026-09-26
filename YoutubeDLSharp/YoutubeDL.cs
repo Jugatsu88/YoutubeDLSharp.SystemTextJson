@@ -4,8 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using YoutubeDLSharp.Helpers;
 using YoutubeDLSharp.Metadata;
 using YoutubeDLSharp.Options;
@@ -172,9 +172,9 @@ namespace YoutubeDLSharp
             {
                 try
                 {
-                    videoData = JsonConvert.DeserializeObject<VideoData>(e.Data);
+                    videoData = JsonSerializer.Deserialize<VideoData>(e.Data);
                 }
-                catch (JsonSerializationException)
+                catch (JsonException)
                 {
                     process.RedirectToError(e);
                 }

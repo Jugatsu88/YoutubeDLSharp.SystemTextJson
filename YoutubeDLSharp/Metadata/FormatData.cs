@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using YoutubeDLSharp.Converters;
 
 namespace YoutubeDLSharp.Metadata
@@ -10,78 +10,78 @@ namespace YoutubeDLSharp.Metadata
     /// </summary>
     public class FormatData
     {
-        [JsonProperty("url")]
+        [JsonPropertyName("url")]
         public string Url { get; set; }
-        [JsonProperty("manifest_url")]
+        [JsonPropertyName("manifest_url")]
         public string ManifestUrl { get; set; }
-        [JsonProperty("ext")]
+        [JsonPropertyName("ext")]
         public string Extension { get; set; }
-        [JsonProperty("format")]
+        [JsonPropertyName("format")]
         public string Format { get; set; }
-        [JsonProperty("format_id")]
+        [JsonPropertyName("format_id")]
         public string FormatId { get; set; }
-        [JsonProperty("format_note")]
+        [JsonPropertyName("format_note")]
         public string FormatNote { get; set; }
         [JsonConverter(typeof(StringToNullableIntConverter))]
-        [JsonProperty("width")]
+        [JsonPropertyName("width")]
         public int? Width { get; set; }
         [JsonConverter(typeof(StringToNullableIntConverter))]
-        [JsonProperty("height")]
+        [JsonPropertyName("height")]
         public int? Height { get; set; }
-        [JsonProperty("resolution")]
+        [JsonPropertyName("resolution")]
         public string Resolution { get; set; }
-        [JsonProperty("dynamic_range")]
+        [JsonPropertyName("dynamic_range")]
         public string DynamicRange { get; set; }
-        [JsonProperty("tbr")]
+        [JsonPropertyName("tbr")]
         public double? Bitrate { get; set; }
-        [JsonProperty("abr")]
+        [JsonPropertyName("abr")]
         public double? AudioBitrate { get; set; }
-        [JsonProperty("acodec")]
+        [JsonPropertyName("acodec")]
         public string AudioCodec { get; set; }
-        [JsonProperty("asr")]
+        [JsonPropertyName("asr")]
         public double? AudioSamplingRate { get; set; }
         [JsonConverter(typeof(StringToNullableIntConverter))]
-        [JsonProperty("audio_channels")]
+        [JsonPropertyName("audio_channels")]
         public int? AudioChannels { get; set; }
-        [JsonProperty("vbr")]
+        [JsonPropertyName("vbr")]
         public double? VideoBitrate { get; set; }
-        [JsonProperty("fps")]
+        [JsonPropertyName("fps")]
         public float? FrameRate { get; set; }
-        [JsonProperty("vcodec")]
+        [JsonPropertyName("vcodec")]
         public string VideoCodec { get; set; }
-        [JsonProperty("container")]
+        [JsonPropertyName("container")]
         public string ContainerFormat { get; set; }
-        [JsonProperty("filesize")]
+        [JsonPropertyName("filesize")]
         public long? FileSize { get; set; }
-        [JsonProperty("filesize_approx")]
+        [JsonPropertyName("filesize_approx")]
         public long? ApproximateFileSize { get; set; }
-        [JsonProperty("player_url")]
+        [JsonPropertyName("player_url")]
         public string PlayerUrl { get; set; }
-        [JsonProperty("protocol")]
+        [JsonPropertyName("protocol")]
         public string Protocol { get; set; }
-        [JsonProperty("fragment_base_url")]
+        [JsonPropertyName("fragment_base_url")]
         public string FragmentBaseUrl { get; set; }
-        [JsonProperty("is_from_start")]
+        [JsonPropertyName("is_from_start")]
         public bool? IsFromStart { get; set; }
         [JsonConverter(typeof(StringToNullableIntConverter))]
-        [JsonProperty("preference")]
+        [JsonPropertyName("preference")]
         public int? Preference { get; set; }
-        [JsonProperty("language")]
+        [JsonPropertyName("language")]
         public string Language { get; set; }
         [JsonConverter(typeof(StringToNullableIntConverter))]
-        [JsonProperty("language_preference")]
+        [JsonPropertyName("language_preference")]
         public int? LanguagePreference { get; set; }
-        [JsonProperty("quality")]
+        [JsonPropertyName("quality")]
         public double? Quality { get; set; }
         [JsonConverter(typeof(StringToNullableIntConverter))]
-        [JsonProperty("source_preference")]
+        [JsonPropertyName("source_preference")]
         public int? SourcePreference { get; set; }
-        [JsonProperty("stretched_ratio")]
+        [JsonPropertyName("stretched_ratio")]
         public float? StretchedRatio { get; set; }
-        [JsonProperty("no_resume")]
+        [JsonPropertyName("no_resume")]
         public bool? NoResume { get; set; }
         [JsonConverter(typeof(StringToEnumConverter<MaybeBool>))]
-        [JsonProperty("has_drm")]
+        [JsonPropertyName("has_drm")]
         public MaybeBool HasDRM { get; set; }
 
         public override string ToString() => $"[{Extension}] {Format}";

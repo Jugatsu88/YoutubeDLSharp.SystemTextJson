@@ -1,14 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace YoutubeDLSharp.Metadata
 {
     public class ChapterData
     {
-        [JsonProperty("start_time")]
+        [JsonPropertyName("start_time")]
         public float? StartTime { get; set; }
-        [JsonProperty("end_time")]
+        [JsonPropertyName("end_time")]
         public float? EndTime { get; set; }
-        [JsonProperty("title")]
+        [JsonPropertyName("title")]
         public string Title { get; set; }
     }
 }

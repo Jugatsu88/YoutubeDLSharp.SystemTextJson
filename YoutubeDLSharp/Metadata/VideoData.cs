@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Text.Json.Serialization;
 using YoutubeDLSharp.Converters;
 
 namespace YoutubeDLSharp.Metadata
@@ -16,213 +15,222 @@ namespace YoutubeDLSharp.Metadata
     public class VideoData
     {
         [JsonConverter(typeof(StringToEnumConverter<MetadataType>))]
-        [JsonProperty("_type")]
+        [JsonPropertyName("_type")]
         public MetadataType ResultType { get; set; }
-        [JsonProperty("extractor")]
+        [JsonPropertyName("extractor")]
         public string Extractor { get; set; }
-        [JsonProperty("extractor_key")]
+        [JsonPropertyName("extractor_key")]
         public string ExtractorKey { get; set; }
         // If data refers to a playlist:
-        [JsonProperty("entries")]
+        [JsonPropertyName("entries")]
         public VideoData[] Entries { get; set; }
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public string ID { get; set; }
-        [JsonProperty("title")]
+        [JsonPropertyName("title")]
         public string Title { get; set; }
-        [JsonProperty("formats")]
+        [JsonPropertyName("formats")]
         public FormatData[] Formats { get; set; }
-        [JsonProperty("url")]
+        [JsonPropertyName("url")]
         public string Url { get; set; }
-        [JsonProperty("ext")]
+        [JsonPropertyName("ext")]
         public string Extension { get; set; }
-        [JsonProperty("format")]
+        [JsonPropertyName("format")]
         public string Format { get; set; }
-        [JsonProperty("format_id")]
+        [JsonPropertyName("format_id")]
         public string FormatID { get; set; }
-        [JsonProperty("player_url")]
+        [JsonPropertyName("player_url")]
         public string PlayerUrl { get; set; }
         //optional fields
-        [JsonProperty("direct")]
+        [JsonPropertyName("direct")]
         public bool Direct { get; set; }
-        [JsonProperty("alt_title")]
+        [JsonPropertyName("alt_title")]
         public string AltTitle { get; set; }
-        [JsonProperty("display_id")]
+        [JsonPropertyName("display_id")]
         public string DisplayID { get; set; }
-        [JsonProperty("thumbnails")]
+        [JsonPropertyName("thumbnails")]
         public ThumbnailData[] Thumbnails { get; set; }
-        [JsonProperty("thumbnail")]
+        [JsonPropertyName("thumbnail")]
         public string Thumbnail { get; set; }
-        [JsonProperty("description")]
+        [JsonPropertyName("description")]
         public string Description { get; set; }
-        [JsonProperty("uploader")]
+        [JsonPropertyName("uploader")]
         public string Uploader { get; set; }
-        [JsonProperty("license")]
+        [JsonPropertyName("license")]
         public string License { get; set; }
-        [JsonProperty("creator")]
+        [JsonPropertyName("creator")]
         public string Creator { get; set; }
         [JsonConverter(typeof(UnixTimestampConverter))]
-        [JsonProperty("release_timestamp")] // date as unix timestamp
+        [JsonPropertyName("release_timestamp")] // date as unix timestamp
         public DateTime? ReleaseTimestamp { get; set; }
         [JsonConverter(typeof(CustomDateTimeConverter))]
-        [JsonProperty("release_date")] // date in UTC (YYYYMMDD).        
+        [JsonPropertyName("release_date")] // date in UTC (YYYYMMDD).        
         public DateTime? ReleaseDate { get; set; }
         [JsonConverter(typeof(UnixTimestampConverter))]
-        [JsonProperty("timestamp")] // date as unix timestamp        
+        [JsonPropertyName("timestamp")] // date as unix timestamp        
         public DateTime? Timestamp { get; set; }
         [JsonConverter(typeof(CustomDateTimeConverter))]
-        [JsonProperty("upload_date")] // date in UTC (YYYYMMDD).        
+        [JsonPropertyName("upload_date")] // date in UTC (YYYYMMDD).        
         public DateTime? UploadDate { get; set; }
         [JsonConverter(typeof(UnixTimestampConverter))]
-        [JsonProperty("modified_timestamp")] // date as unix timestamp
+        [JsonPropertyName("modified_timestamp")] // date as unix timestamp
         public DateTime? ModifiedTimestamp { get; set; }
         [JsonConverter(typeof(CustomDateTimeConverter))]
-        [JsonProperty("modified_date")] // date in UTC (YYYYMMDD).        
+        [JsonPropertyName("modified_date")] // date in UTC (YYYYMMDD).        
         public DateTime? ModifiedDate { get; set; }
-        [JsonProperty("uploader_id")]
+        [JsonPropertyName("uploader_id")]
         public string UploaderID { get; set; }
-        [JsonProperty("uploader_url")]
+        [JsonPropertyName("uploader_url")]
         public string UploaderUrl { get; set; }
-        [JsonProperty("channel")]
+        [JsonPropertyName("channel")]
         public string Channel { get; set; }
-        [JsonProperty("channel_id")]
+        [JsonPropertyName("channel_id")]
         public string ChannelID { get; set; }
-        [JsonProperty("channel_url")]
+        [JsonPropertyName("channel_url")]
         public string ChannelUrl { get; set; }
-        [JsonProperty("channel_follower_count")]
+        [JsonPropertyName("channel_follower_count")]
         public long? ChannelFollowerCount { get; set; }
-        [JsonProperty("location")]
+        [JsonPropertyName("location")]
         public string Location { get; set; }
-        [JsonProperty("subtitles")]
+        [JsonPropertyName("subtitles")]
         public Dictionary<string, SubtitleData[]> Subtitles { get; set; }
-        [JsonProperty("automatic_captions")]
+        [JsonPropertyName("automatic_captions")]
         public Dictionary<string, SubtitleData[]> AutomaticCaptions { get; set; }
-        [JsonProperty("duration")]
+        [JsonPropertyName("duration")]
         public float? Duration { get; set; }
-        [JsonProperty("view_count")]
+        [JsonPropertyName("view_count")]
         public long? ViewCount { get; set; }
-        [JsonProperty("concurrent_view_count")]
+        [JsonPropertyName("concurrent_view_count")]
         public long? ConcurrentViewCount { get; set; }
-        [JsonProperty("like_count")]
+        [JsonPropertyName("like_count")]
         public long? LikeCount { get; set; }
-        [JsonProperty("dislike_count")]
+        [JsonPropertyName("dislike_count")]
         public long? DislikeCount { get; set; }
-        [JsonProperty("repost_count")]
+        [JsonPropertyName("repost_count")]
         public long? RepostCount { get; set; }
-        [JsonProperty("average_rating")]
+        [JsonPropertyName("average_rating")]
         public double? AverageRating { get; set; }
-        [JsonProperty("comment_count")]
+        [JsonPropertyName("comment_count")]
         public long? CommentCount { get; set; }
-        [JsonProperty("comments")]
+        [JsonPropertyName("comments")]
         public CommentData[] Comments { get; set; }
-        [JsonProperty("age_limit")]
+        [JsonPropertyName("age_limit")]
         public int? AgeLimit { get; set; }
-        [JsonProperty("webpage_url")]
+        [JsonPropertyName("webpage_url")]
         public string WebpageUrl { get; set; }
-        [JsonProperty("categories")]
+        [JsonPropertyName("categories")]
         public string[] Categories { get; set; }
-        [JsonProperty("tags")]
+        [JsonPropertyName("tags")]
         public string[] Tags { get; set; }
-        [JsonProperty("cast")]
+        [JsonPropertyName("cast")]
         public string[] Cast { get; set; }
-        [JsonProperty("is_live")]
+        [JsonPropertyName("is_live")]
         public bool? IsLive { get; set; }
-        [JsonProperty("was_live")]
+        [JsonPropertyName("was_live")]
         public bool? WasLive { get; set; }
         [JsonConverter(typeof(StringToEnumConverter<LiveStatus>))]
-        [JsonProperty("live_status")]
+        [JsonPropertyName("live_status")]
         public LiveStatus LiveStatus { get; set; }
-        [JsonProperty("start_time")]
+        [JsonPropertyName("start_time")]
         public float? StartTime { get; set; }
-        [JsonProperty("end_time")]
+        [JsonPropertyName("end_time")]
         public float? EndTime { get; set; }
-        [JsonProperty("playable_in_embed")]
-        public string PlayableInEmbed { get; set; }
-        [JsonConverter(typeof(StringEnumConverter))]
-        [JsonProperty("availability")]
+        // yt-dlp actually emits this as a real JSON boolean, not a string - the upstream model
+        // had it typed as `string`, which Newtonsoft silently coerced ("True"/"False") without
+        // complaint. System.Text.Json refuses that coercion and throws instead, which is how
+        // this was actually caught (JsonException: "The JSON value could not be converted to
+        // System.String. Path: $.playable_in_embed").
+        [JsonPropertyName("playable_in_embed")]
+        public bool? PlayableInEmbed { get; set; }
+        [JsonConverter(typeof(StringToEnumConverter<Availability>))]
+        [JsonPropertyName("availability")]
         public Availability? Availability { get; set; }
-        [JsonProperty("chapters")]
+        [JsonPropertyName("chapters")]
         public ChapterData[] Chapters { get; set; }
-        [JsonProperty("chapter")]
+        [JsonPropertyName("chapter")]
         public string Chapter { get; set; }
 
-        [JsonProperty("chapter_number")]
+        [JsonPropertyName("chapter_number")]
         public int? ChapterNumber { get; set; }
 
-        [JsonProperty("chapter_id")]
+        [JsonPropertyName("chapter_id")]
         public string ChapterId { get; set; }
 
-        [JsonProperty("series")]
+        [JsonPropertyName("series")]
         public string Series { get; set; }
 
-        [JsonProperty("series_id")]
+        [JsonPropertyName("series_id")]
         public string SeriesId { get; set; }
 
-        [JsonProperty("season")]
+        [JsonPropertyName("season")]
         public string Season { get; set; }
 
-        [JsonProperty("season_number")]
+        [JsonPropertyName("season_number")]
         public int? SeasonNumber { get; set; }
 
-        [JsonProperty("season_id")]
+        [JsonPropertyName("season_id")]
         public string SeasonId { get; set; }
 
-        [JsonProperty("episode")]
+        [JsonPropertyName("episode")]
         public string Episode { get; set; }
 
-        [JsonProperty("episode_number")]
+        [JsonPropertyName("episode_number")]
         public int? EpisodeNumber { get; set; }
 
-        [JsonProperty("episode_id")]
+        [JsonPropertyName("episode_id")]
         public string EpisodeId { get; set; }
 
-        [JsonProperty("track")]
+        [JsonPropertyName("track")]
         public string Track { get; set; }
 
-        [JsonProperty("track_number")]
+        [JsonPropertyName("track_number")]
         public int? TrackNumber { get; set; }
 
-        [JsonProperty("track_id")]
+        [JsonPropertyName("track_id")]
         public string TrackId { get; set; }
 
-        [JsonProperty("artist")]
+        [JsonPropertyName("artist")]
         public string Artist { get; set; }
 
-        [JsonProperty("genre")]
+        [JsonPropertyName("genre")]
         public string Genre { get; set; }
 
-        [JsonProperty("album")]
+        [JsonPropertyName("album")]
         public string Album { get; set; }
 
-        [JsonProperty("album_type")]
+        [JsonPropertyName("album_type")]
         public string AlbumType { get; set; }
 
-        [JsonProperty("album_artist")]
+        [JsonPropertyName("album_artist")]
         public string AlbumArtist { get; set; }
 
-        [JsonProperty("disc_number")]
+        [JsonPropertyName("disc_number")]
         public int? DiscNumber { get; set; }
 
-        [JsonProperty("release_year")]
-        public string ReleaseYear { get; set; }
+        // Same category of pre-existing type mismatch as PlayableInEmbed above: yt-dlp emits this
+        // as a real JSON integer, Newtonsoft silently coerced it into a string, System.Text.Json
+        // correctly refuses to (JsonException: "The JSON value could not be converted to
+        // System.String. Path: $.release_year").
+        [JsonPropertyName("release_year")]
+        public int? ReleaseYear { get; set; }
 
-        [JsonProperty("composer")]
+        [JsonPropertyName("composer")]
         public string Composer { get; set; }
 
-        [JsonProperty("section_start")]
+        [JsonPropertyName("section_start")]
         public long? SectionStart { get; set; }
 
-        [JsonProperty("section_end")]
+        [JsonPropertyName("section_end")]
         public long? SectionEnd { get; set; }
 
-        [JsonProperty("rows")]
+        [JsonPropertyName("rows")]
         public long? StoryboardFragmentRows { get; set; }
 
-        [JsonProperty("columns")]
+        [JsonPropertyName("columns")]
         public long? StoryboardFragmentColumns { get; set; }
 
         public override string ToString()
         {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
+            return System.Text.Json.JsonSerializer.Serialize(this, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
         }
     }
 

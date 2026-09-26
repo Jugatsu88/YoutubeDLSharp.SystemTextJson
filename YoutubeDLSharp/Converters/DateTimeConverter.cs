@@ -1,40 +1,81 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Runtime.Serialization;
-using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace YoutubeDLSharp.Converters
-{    
+{
     public class UnixTimestampConverter : JsonConverter<DateTime?>
     {
-        private readonly DateTime _Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        public override DateTime? ReadJson(JsonReader reader, Type objectType, DateTime? existingValue, bool hasExistingValue, JsonSerializer serializer)
+        private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+        public override DateTime? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (reader.Value == null)
+            if (reader.TokenType == JsonTokenType.Null)
             {
                 return null;
             }
 
-            var value = Convert.ToDouble(reader.Value);
-            var timeSpan = TimeSpan.FromSeconds(value);
-            var utc = _Epoch.Add(timeSpan).ToUniversalTime();
-            return utc;
+            double value = reader.TokenType == JsonTokenType.String
+                ? Convert.ToDouble(reader.GetString(), CultureInfo.InvariantCulture)
+                : reader.GetDouble();
+
+            return Epoch.AddSeconds(value);
         }
 
-        public override void WriteJson(JsonWriter writer, DateTime? value, JsonSerializer serializer)
+        public override void Write(Utf8JsonWriter writer, DateTime? value, JsonSerializerOptions options)
         {
-            writer.WriteValue(value?.Subtract(_Epoch).TotalSeconds.ToString());
+            if (value.HasValue)
+            {
+                writer.WriteNumberValue((value.Value - Epoch).TotalSeconds);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
         }
     }
 
-    public class CustomDateTimeConverter : IsoDateTimeConverter
+    // Newtonsoft's IsoDateTimeConverter had a configurable DateTimeFormat ("yyyyMMdd" here, matching
+    // yt-dlp's upload_date/release_date/modified_date fields). System.Text.Json has no equivalent
+    // built-in converter with a custom format string, so this is a small converter rather than a
+    // one-line subclass like the original.
+    public class CustomDateTimeConverter : JsonConverter<DateTime?>
     {
-        public CustomDateTimeConverter()
+        private const string Format = "yyyyMMdd";
+
+        public override DateTime? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            DateTimeFormat = "yyyyMMdd";
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            var value = reader.GetString();
+            if (string.IsNullOrEmpty(value))
+            {
+                return null;
+            }
+
+            if (DateTime.TryParseExact(value, Format, CultureInfo.InvariantCulture,
+                DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal, out var parsed))
+            {
+                return parsed;
+            }
+
+            return null;
+        }
+
+        public override void Write(Utf8JsonWriter writer, DateTime? value, JsonSerializerOptions options)
+        {
+            if (value.HasValue)
+            {
+                writer.WriteStringValue(value.Value.ToString(Format, CultureInfo.InvariantCulture));
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
         }
     }
 }

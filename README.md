@@ -1,11 +1,27 @@
-# YoutubeDLSharp
+# YoutubeDLSharp.SystemTextJson
+
+> **Unofficial fork of [Bluegrams/YoutubeDLSharp](https://github.com/Bluegrams/YoutubeDLSharp)** (BSD-3-Clause, original copyright retained in `LICENSE.txt`).
+> It is not affiliated with or endorsed by the original author. All credit for the library itself belongs to them.
+>
+> **What differs:** JSON handling uses `System.Text.Json`; there is no dependency on `Newtonsoft.Json`.
+> The assembly and namespaces are still `YoutubeDLSharp`, so it is a drop-in replacement - but it cannot be referenced
+> alongside the original package in the same project.
+>
+> **Trade-offs** (please read before switching):
+> - On `net8.0` this removes a dependency. On `netstandard2.0` it swaps one for another: `System.Text.Json` is a NuGet package there and brings its own dependencies.
+> - Target frameworks are `netstandard2.0` and `net8.0` only. Upstream's `net45` and `net6.0` targets were dropped.
+> - The public converter classes (`Converters/`) and the metadata attributes now use `System.Text.Json` types, so code that used or subclassed them directly will need changes.
+> - `System.Text.Json` is stricter than Newtonsoft in places (for example it ignores `[EnumMember]`, so enum mapping uses a custom converter). Upstream's serialization tests were ported and pass; the network-dependent download/metadata tests have not been run against this fork.
+> - Tracking upstream releases is manual. See `PORT_NOTES.md` for the file-by-file change list.
+
+# YoutubeDLSharp (upstream README follows)
 
 A simple .NET wrapper library for [youtube-dl](https://github.com/ytdl-org/youtube-dl) and [yt-dlp](https://github.com/yt-dlp/yt-dlp).
 
 | For **yt-dlp** | For **youtube-dl** |
 | --- | --- |
 | **Versions >= v.1.0**  | [Versions v.0.x](https://github.com/Bluegrams/YoutubeDLSharp/tree/v.0.x)
-| [![Nuget](https://img.shields.io/nuget/vpre/YoutubeDLSharp?color=blue)](https://www.nuget.org/packages/YoutubeDLSharp) | [![NuGet](https://img.shields.io/badge/nuget-v.0.4.3-blue)](https://www.nuget.org/packages/YoutubeDLSharp/0.4.3)
+| [![Nuget](https://img.shields.io/nuget/vpre/YoutubeDLSharp.SystemTextJson?color=blue)](https://www.nuget.org/packages/YoutubeDLSharp.SystemTextJson) | [![NuGet](https://img.shields.io/badge/nuget-v.0.4.3-blue)](https://www.nuget.org/packages/YoutubeDLSharp/0.4.3)
 
 ## What is it?
 
@@ -18,7 +34,7 @@ For more about the features of youtube-dl/ yt-dlp, supported websites and anythi
 First, add the package from NuGet:
 
 ```
-PM> Install-Package YoutubeDLSharp
+PM> Install-Package YoutubeDLSharp.SystemTextJson
 ```
 
 Next, you would want to have the binaries for yt-dlp and FFmpeg available.

@@ -1,19 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45;net6.0;net8.0</TargetFrameworks>
-    <Authors>Bluegrams</Authors>
+    <!-- Trimmed from upstream's netstandard2.0;net45;net6.0;net8.0: this fork exists to drop
+         Newtonsoft.Json for System.Text.Json, and System.Text.Json doesn't meaningfully support
+         net45 (pre-.NET-Core) at all, so keeping that target would mean carrying Newtonsoft.Json
+         back in just for one legacy TFM - the opposite of the point. net6.0 is EOL. Targets here
+         are netstandard2.0 (broad compatibility, matches how this was originally consumed) and
+         net8.0 (current LTS, what most modern consuming projects target). -->
+    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+    <PackageId>YoutubeDLSharp.SystemTextJson</PackageId>
+    <Authors>Bluegrams;Jugatsu88</Authors>
     <Description>
 		A simple .NET wrapper library for youtube-dl and yt-dlp.
+Unofficial fork of Bluegrams/YoutubeDLSharp that uses System.Text.Json instead of Newtonsoft.Json.
 
 Note: Package versions &gt;= 1.0 are optimized to work with yt-dlp.
 Package versions 0.x retain support for the original youtube-dl.
 	</Description>
-    <Copyright>© 2020-2026 Bluegrams</Copyright>
+    <Copyright>© 2020-2026 Bluegrams. System.Text.Json port © 2026 Jugatsu88.</Copyright>
     <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/Bluegrams/YoutubeDLSharp</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/Jugatsu88/YoutubeDLSharp.SystemTextJson</PackageProjectUrl>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>youtube video download youtube-dl yt-dlp</PackageTags>
+    <PackageTags>youtube video download youtube-dl yt-dlp system-text-json</PackageTags>
     <LangVersion>7.3</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
@@ -25,8 +33,8 @@ Package versions 0.x retain support for the original youtube-dl.
     <BuildYear>$([System.DateTime]::Now.ToString(yy))</BuildYear>
     <BuildDay>$([System.DateTime]::Now.DayOfYear)</BuildDay>
     <AssemblyVersion>$(VersionPrefix).$(BuildYear)$(BuildDay)</AssemblyVersion>
-    <PackageReleaseNotes>https://github.com/Bluegrams/YoutubeDLSharp/blob/master/Changelog.md</PackageReleaseNotes>
-	<RepositoryUrl>https://github.com/Bluegrams/YoutubeDLSharp</RepositoryUrl>
+    <PackageReleaseNotes>https://github.com/Jugatsu88/YoutubeDLSharp.SystemTextJson/blob/master/Changelog.md</PackageReleaseNotes>
+	<RepositoryUrl>https://github.com/Jugatsu88/YoutubeDLSharp.SystemTextJson</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -39,13 +47,10 @@ Package versions 0.x retain support for the original youtube-dl.
   <ItemGroup>
 	<None Include="../README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
-	<PackageReference Include="System.ValueTuple" Version="4.5.0" />
-	<Reference Include="System.IO.Compression" />
-	<Reference Include="System.Net.Http" />
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <!-- net8.0 ships System.Text.Json in the shared framework already; netstandard2.0 (used by
+         older .NET Framework / .NET Core consumers) needs it as an explicit package. -->
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
   </ItemGroup>
 
 </Project>

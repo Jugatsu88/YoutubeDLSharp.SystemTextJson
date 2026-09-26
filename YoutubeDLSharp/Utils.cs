@@ -7,9 +7,9 @@ using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using YoutubeDLSharp.Helpers;
 
 namespace YoutubeDLSharp
@@ -253,7 +253,7 @@ namespace YoutubeDLSharp
             if (string.IsNullOrEmpty(directoryPath)) { directoryPath = Directory.GetCurrentDirectory(); }
             const string FFMPEG_API_URL = "https://ffbinaries.com/api/v1/version/latest";
 
-            var ffmpegVersion = JsonConvert.DeserializeObject<FFmpegApi.Root>(await (await client.GetAsync(FFMPEG_API_URL)).Content.ReadAsStringAsync());
+            var ffmpegVersion = JsonSerializer.Deserialize<FFmpegApi.Root>(await (await client.GetAsync(FFMPEG_API_URL)).Content.ReadAsStringAsync());
 
             FFmpegApi.OsBinVersion ffContent;
             switch (OSHelper.GetOSVersion())
@@ -307,34 +307,34 @@ namespace YoutubeDLSharp
         {
             public class Root
             {
-                [JsonProperty("version")]
+                [JsonPropertyName("version")]
                 public string Version { get; set; }
 
-                [JsonProperty("permalink")]
+                [JsonPropertyName("permalink")]
                 public string Permalink { get; set; }
 
-                [JsonProperty("bin")]
+                [JsonPropertyName("bin")]
                 public Bin Bin { get; set; }
             }
 
             public class Bin
             {
-                [JsonProperty("windows-64")]
+                [JsonPropertyName("windows-64")]
                 public OsBinVersion Windows64 { get; set; }
 
-                [JsonProperty("linux-64")]
+                [JsonPropertyName("linux-64")]
                 public OsBinVersion Linux64 { get; set; }
 
-                [JsonProperty("osx-64")]
+                [JsonPropertyName("osx-64")]
                 public OsBinVersion Osx64 { get; set; }
             }
 
             public class OsBinVersion
             {
-                [JsonProperty("ffmpeg")]
+                [JsonPropertyName("ffmpeg")]
                 public string Ffmpeg { get; set; }
 
-                [JsonProperty("ffprobe")]
+                [JsonPropertyName("ffprobe")]
                 public string Ffprobe { get; set; }
             }
 

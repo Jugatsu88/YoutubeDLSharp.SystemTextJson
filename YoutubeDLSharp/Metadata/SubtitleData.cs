@@ -1,17 +1,17 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace YoutubeDLSharp.Metadata
 {
     //https://github.com/yt-dlp/yt-dlp/blob/9c53b9a1b6b8914e4322263c97c26999f2e5832e/yt_dlp/extractor/common.py#L105-L403
     public class SubtitleData
     {
-        [JsonProperty("ext")]
+        [JsonPropertyName("ext")]
         public string Ext { get; set; }
-        [JsonProperty("data")]
+        [JsonPropertyName("data")]
         public string Data { get; set; }
-        [JsonProperty("url")]
+        [JsonPropertyName("url")]
         public string Url { get; set; }
-        [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; }
 
         //Unused Fields (These are fields that were excluded, but documented for future use:

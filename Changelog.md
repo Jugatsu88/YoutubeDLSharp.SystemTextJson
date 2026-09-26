@@ -1,4 +1,9 @@
-# YoutubeDLSharp Changelog
+# YoutubeDLSharp.SystemTextJson Changelog
+
+### Fork (2026-09)
+- **Changed:** Newtonsoft.Json replaced with System.Text.Json. Based on upstream v.1.2.0. Target frameworks reduced to `netstandard2.0;net8.0`. See `PORT_NOTES.md`.
+
+# Upstream YoutubeDLSharp Changelog
 
 ### v.1.2.0 (2026-01)
 - **New**/ **Changed:** Include new and changed yt-dlp options (version 2025-12-08).
